@@ -390,6 +390,10 @@ interactive-all)
 functioninteractive
 ;;
 
+printer-settings)
+kde-open http://localhost:631/printers
+;;
+
 help)
 printer=$(lpoptions | awk -F'printers/' '{print $2}')
 error=$(echo ciao | lp )
