@@ -132,6 +132,12 @@ lp $parameters "$1"
 
 }
 
+functionprintoffice(){
+
+libreoffice --invisible  --norestore -p $1
+
+}
+
 functiondisplay(){
 
 case $1 in 
