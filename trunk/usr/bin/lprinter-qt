@@ -21,29 +21,8 @@
 
 configurationfile="$HOME/.lprinter-qt.cfg"
 listfiles="$HOME/.lprinter-qt.lst"
-#Detect language
-lang=${LANG%.*} 
-lang=${lang#*_}
-###################
-if [[ -z $lang ]];then
-lang="US"
-fi
-
-declare -A string
-
-string[IT-1]="Numero Copie"
-string[IT-2]="Orientanzione"
-string[IT-3]="Espandi a pagina"
-string[IT-4]="Questo file  ~/.lprinter-qt.lst non esiste, per crearlo aggiungi i file alla lista"
-string[IT-5]="Questo file  ~/.lprinter-qt.lst non esiste, cosa lo cancelli a fare xD"
-string[IT-6]="Vuoi vedere il file prima di stamparlo ?"
-
-string[US-1]="Number of copies"
-string[US-2]="Orientation"
-string[US-3]="fitplot"
-string[US-4]="This file doesn't exist ~/.lprinter-qt.lst before you have to add files to print list"
-string[US-5]="This file doesn't exist ~/.lprinter-qt.lst so... i can't delete"
-string[US-6]="Do you want see your file before to print?"
+ 
+ 
 
 
 lockdir=/tmp/lprinter-qt.lock
@@ -105,11 +84,11 @@ echo "nowardev 2011"
 
 functionsavesettings(){
 
-copies=$(kdialog --title "${string[$lang-1]}" --textinputbox "${string[$lang-1]}" 1 --default 1 )
+copies=$(kdialog --title $"Number of copies" --textinputbox $"Number of copies" 1 --default 1 )
 
-landscape=$(kdialog -title "${string[$lang-2]}" --combobox "${string[$lang-2]}" Landscape Normal  --default Normal)
+landscape=$(kdialog -title $"Orientation" --combobox $"Orientation" Landscape Normal  --default Normal)
 
-fitplot=$(kdialog -title "${string[$lang-3]}" --combobox "${string[$lang-3]}"  Fitplot Normal --default Normal)
+fitplot=$(kdialog -title $"fitplot" --combobox $"fitplot"  Fitplot Normal --default Normal)
 
   
 echo "[copies]: $copies" >$configurationfile
@@ -226,7 +205,7 @@ if [[ $a == 0 ]] ; then functiondisplay $toprintfile ; fi
 *.txt | *.cfg | *.lst )
 toprintfile="$1"
 if [[ $a == 0 ]] ; then functiondisplay $toprintfile "$toprintfile" ; fi 
- functionprint "$toprintfile"
+ functionprintoffice "$toprintfile"
 ;;
 
 esac
@@ -247,11 +226,11 @@ fitplot=$(awk '/[fitplot]: /{print $2}' $configurationfile)
 
 if [[ -z $copies || -z $landscape || -z $fitplot  ]] ;then 
 
-copies=$(kdialog --title "${string[$lang-1]}" --textinputbox "${string[$lang-1]}" 1 --default 1 )
+copies=$(kdialog --title $"Number of copies" --textinputbox $"Number of copies" 1 --default 1 )
 
-landscape=$(kdialog -title "${string[$lang-2]}" --combobox "${string[$lang-2]}" Landscape Normal  --default Normal)
+landscape=$(kdialog -title $"Orientation" --combobox $"Orientation" Landscape Normal  --default Normal)
 
-fitplot=$(kdialog -title "${string[$lang-3]}" --combobox "${string[$lang-3]}"  Fitplot Normal --default Normal)
+fitplot=$(kdialog -title $"fitplot" --combobox $"fitplot"  Fitplot Normal --default Normal)
 
 else
 
@@ -298,11 +277,11 @@ functioninteractiveeach(){
 
 
 
-copies=$(kdialog --title "${string[$lang-1]}" --textinputbox "${string[$lang-1]}" 1 --default 1 )
+copies=$(kdialog --title $"Number of copies" --textinputbox $"Number of copies" 1 --default 1 )
 
-landscape=$(kdialog -title "${string[$lang-2]}" --combobox "${string[$lang-2]}" Landscape Normal  --default Normal)
+landscape=$(kdialog -title $"Orientation" --combobox $"Orientation" Landscape Normal  --default Normal)
 
-fitplot=$(kdialog -title "${string[$lang-3]}" --combobox "${string[$lang-3]}"  Fitplot Normal --default Normal)
+fitplot=$(kdialog -title $"fitplot" --combobox $"fitplot"  Fitplot Normal --default Normal)
 
 
 #if [[ -z $copies ]] ; then 
@@ -337,7 +316,7 @@ functiondetectfile $line
 
 functionaddfiles(){
 
-echo "file to enqueqe $1"
+echo $"file to enqueqe $1"
 
 echo "$1" >>  $listfiles
   
@@ -352,7 +331,7 @@ case "$1" in
 add-files)
  
 if [[ ! -e "$2" ]] ; then 
-kdialog --msgbox "something of wrong this file  $2 doesn't exist? :S this is strange" 
+kdialog --msgbox $"something of wrong this file  $2 doesn't exist? :S this is strange" 
 else 
 functionaddfiles "$2"
 fi  
@@ -363,7 +342,7 @@ show-files)
 if [[ -e $listfiles ]] ; then
       kate $listfiles
 else
-    kdialog --title "Dolphin video converter Error" --msgbox "${string[$lang-4]} " 
+    kdialog --title $"Dolphin video converter Error" --msgbox $"This file doesn't exist ~/.lprinter-qt.lst before you have to add files to print list" 
 fi
 ;;
 
@@ -371,13 +350,13 @@ delete-list)
 if [[ -e $listfiles ]] ; then
       rm  $listfiles
 else
-    kdialog --title "Dolphin video converter Error" --msgbox "${string[$lang-5]} " 
+    kdialog --title 4"Dolphin video converter Error" --msgbox $"This file doesn't exist ~/.lprinter-qt.lst so... i can't delete" 
 fi
 ;;
 
 
 interactive-each)
-a=$(kdialog --yesno "${string[$lang-6]}")
+a=$(kdialog --yesno $"Do you want see your file before to print?")
 while read line
     do
 
@@ -398,7 +377,7 @@ help)
 printer=$(lpoptions | awk -F'printers/' '{print $2}')
 error=$(echo ciao | lp )
 if [[ $error =~ "lp: Error - no default destination available."  ]]; then 
-kdialog --msgbox "Error - no default destination available 
+kdialog --msgbox $"Error - no default destination available 
 please set your printer in this way if your printer is :
 
 hp_photosmart_7700_series
@@ -414,7 +393,7 @@ $printer
  "
 else 
 
-kdialog --msgbox "i have detected that your printer is 
+kdialog --msgbox $"i have detected that your printer is 
 
 $printer
 
