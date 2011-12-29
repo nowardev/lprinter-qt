@@ -18,7 +18,7 @@
 
 install 
 
-sudo cp "$PWD"/usr/bin/lprinter-qt /usr/bin/lprinter-qt  && sudo chmod +x /usr/bin/lprinter-qt && sudo cp "$PWD"/usr/share/kde4/services/lprinter-qt.desktop  $(kde4-config --prefix)/share/kde4/services/ServiceMenus/lprinter-qt.desktop  && sudo cp "$PWD"/usr/bin/lprinter-qt-office /usr/bin/lprinter-qt-office  && sudo chmod +x /usr/bin/lprinter-qt-office && sudo cp "$PWD"/usr/share/kde4/services/lprinter-qt-office.desktop  $(kde4-config --prefix)/share/kde4/services/ServiceMenus/lprinter-qt-office.desktop  && kbuildsycoca4
+sudo cp "$PWD"/usr/bin/lprinter-qt /usr/bin/lprinter-qt  && sudo chmod +x /usr/bin/lprinter-qt && sudo cp "$PWD"/usr/share/kde4/services/lprinter-qt.desktop  $(kde4-config --prefix)/share/kde4/services/ServiceMenus/lprinter-qt.desktop  && sudo cp "$PWD"/usr/bin/lprinter-qt-office /usr/bin/lprinter-qt-office  && sudo chmod +x /usr/bin/lprinter-qt-office && sudo cp "$PWD"/usr/share/kde4/services/lprinter-qt-office.desktop  $(kde4-config --prefix)/share/kde4/services/ServiceMenus/lprinter-qt-office.desktop  && kbuildsycoca4 
 
 uninstall
 
